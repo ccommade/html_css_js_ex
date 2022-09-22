@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>如何利用边框绘制三角形</title>
+    <style>
+        .box1 {
+            /*
+            如何利用border边框绘制三角形：
+            如果元素的宽和高不为0，我们可以看到边框的值设置的大一些，边框呈现出来的是四个梯形（上左下右）
+            */
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            border-top: 50px solid blue;
+            border-right: 50px solid greenyellow;
+            border-bottom: 50px solid blueviolet;
+            border-left: 50px solid yellowgreen;
+        }
+
+        .box2 {
+            /*
+            如果此时我们注释掉右边的边框就会发现右边少的少的是一个矩形
+            （表明在元素中如果设置了元素的宽高 此时border显示出来的是一个矩形，不是三角形也不是梯形，并且发现上边框和下边框都少了一半）
+            */
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            border-top: 50px solid blue;
+            /*border-right: 50px solid greenyellow;*/
+            border-bottom: 50px solid blueviolet;
+            border-left: 50px solid yellowgreen;
+        }
+
+        .box3 {
+            /*
+            此时我们取消掉div元素的宽高，又会发现此时border变成了四个三角形
+            */
+            width: 0px;
+            height: 0px;
+            background-color: red;
+            border-top: 50px solid blue;
+            border-right: 50px solid greenyellow;
+            border-bottom: 50px solid blueviolet;
+            border-left: 50px solid yellowgreen;
+        }
+
+        .box4 {
+            /*
+            把其他三个边框设置为透明颜色，就会发现上边框变成了一个倒三角形，不是说border是三角形或者是梯形吗 为什么现在变成了一个倒三角
+            主要是因为 在设置border的四个边框的高度的时候（他们本来就是四边形）他们相互之间是有重复的45度重复。
+            此时通过设置四边的border的高度并设置透明就会得到不同的三角形或者四边形。
+            */
+            width: 0px;
+            height: 0px;
+            /*background-color: red;*/
+            border-top: 50px solid blue;
+            border-right: 50px solid transparent;
+            border-bottom: 50px solid transparent;
+            border-left: 50px solid transparent;
+        }
+
+        .clear {
+            clear: top;
+        }
+
+        body {
+            position: relative;
+            padding: 100px;
+        }
+
+        .show {
+            border-left: 200px solid #BAC36E;
+            border-right: 200px solid #BAB26E;
+            border-top: 200px solid #ABB26E;
+            border-bottom: 200px solid #BAB2E6;
+            width: 0;
+            height: 0;
+        }
+    </style>
+</head>
+<body>
+<!--
+经常看到一些非常漂亮的Tip插件，有一个三角指向目标，非常好看。
+
+使用纯边框属性也可以做出这样的效果来。
+
+一切都还要从HTML元素的边框说起。
+
+在HTML中，一个元素可以具有边框（border）、内边距（padding）、外边距（margin）。
+
+当元素的宽度和高度都不为0时，border呈现出一个四方形环绕在内容的四周。但是当元素的高度和宽度都为0时，情况就变得不同了。
+
+因为没有高度和宽度（指内容的高度和宽度），元素的四条边会重叠在一起，如下所示：
+
+假设四条边都是一个矩形，那么4条边描述如下：
+
+left-border：（1，2，3，8）
+
+right-border: (4，5，6，7）
+
+top-border: （1，8，7，6）
+
+bottome-border: （2，3，4，5）
+
+因为(1,8)组成的区域是top-border和left-border的重叠区域，因此它们各占一般，以对角线平分，因此标号为8的三角区域属于top-border，标号为1的三角区域属于left-border。其它区域类似。因此实际上四条边的构成是：
+
+left-border：（1，2）
+
+right-border: (5，6）
+
+top-border: （8，7）
+
+bottome-border: （3，4）
+
+它们都是三角形。如果其它的三边都为透明，那么我们就能得到一个三角形。由于没有使用图片，因此能减少流量，实现也非常简单，推荐大家使用。最后给出第三张图的html代码
+-->
+<div class="show"></div>
+<div style="width:400px;height: 1px;position: absolute; top: 300px;
+border-top:1px dashed   red;"></div>
+<div style="height:400px;width: 1px;position: absolute; left: 300px;top:100px;
+border-left:1px dashed red;"></div>
+<p style="position: absolute;left:150px;top:200px;">1</p>
+<p style="position: absolute;left:150px;top:350px;">2</p>
+<p style="position: absolute;left:250px;top:400px;">3</p>
+<p style="position: absolute;left:350px;top:400px;">4</p>
+<p style="position: absolute;left:425px;top:350px;">5</p>
+<p style="position: absolute;left:425px;top:250px;">6</p>
+<p style="position: absolute;left:350px;top:150px;">7</p>
+<p style="position: absolute;left:200px;top:150px;">8</p>
+
+<div class="box1"></div>
+<div class="box2"></div>
+<div class="box3"></div>
+<div class="box4"></div>
+<div class="clear"></div>
+</body>
+</html>
